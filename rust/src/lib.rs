@@ -7,40 +7,42 @@
 //! 小さなコンビネータを `chain`, `or`, `repeat` などで合成し、
 //! 複雑なパーサーを宣言的に構築できる。
 
-pub mod types;
 pub mod chain;
-pub mod chain_n;
 pub mod chain_l;
+pub mod chain_n;
 pub mod chain_r;
+pub mod chain_tuple;
 pub mod convert;
-pub mod or_comb;
-pub mod or_n;
+pub mod label;
+pub mod lazy;
 pub mod not_comb;
 pub mod option_comb;
+pub mod or_comb;
+pub mod or_n;
+pub mod peek;
 pub mod repeat;
 pub mod sep_by;
-pub mod lazy;
+pub mod types;
 pub mod use_comb;
-pub mod peek;
-pub mod label;
 
 #[cfg(test)]
 mod tests;
 
 // クレートルートから全モジュールを再エクスポート
-pub use types::*;
 pub use chain::*;
-pub use chain_n::*;
 pub use chain_l::*;
+pub use chain_n::*;
 pub use chain_r::*;
+pub use chain_tuple::*;
 pub use convert::*;
-pub use or_comb::*;
-pub use or_n::*;
+pub use label::*;
+pub use lazy::*;
 pub use not_comb::*;
 pub use option_comb::*;
+pub use or_comb::*;
+pub use or_n::*;
+pub use peek::*;
 pub use repeat::*;
 pub use sep_by::*;
-pub use lazy::*;
+pub use types::*;
 pub use use_comb::*;
-pub use peek::*;
-pub use label::*;

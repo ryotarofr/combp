@@ -164,6 +164,16 @@ pub trait HasOffset {
     fn offset(&self) -> usize;
 }
 
+/// `OnError` の `furthest` 情報を保持してエラーを伝播するヘルパー。
+///
+/// chain 系コンビネータで内側の失敗をそのまま返す際に使用する。
+pub fn propagate_err<C: Clone, T>(context: C, e: OnError<C>) -> CombinatorResult<C, T> {
+    match e.furthest {
+        Some(f) => CombinatorResult::err_with_furthest(context, e.message, e.by, *f),
+        None => CombinatorResult::err(context, e.message, e.by),
+    }
+}
+
 /// 2つの `OnError` のうち、入力のより先まで進んだ（offset が大きい）方を返す。
 ///
 /// `or` / `or_n` で複数の分岐が失敗した際に、最も有用なエラーを選択するために使用する。

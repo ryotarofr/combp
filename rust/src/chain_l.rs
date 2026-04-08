@@ -42,11 +42,3 @@ where
         }
     })
 }
-
-/// `OnError` の `furthest` 情報を保持してエラーを伝播するヘルパー。
-fn propagate_err<C: Clone, T>(context: C, e: OnError<C>) -> CombinatorResult<C, T> {
-    match e.furthest {
-        Some(f) => CombinatorResult::err_with_furthest(context, e.message, e.by, *f),
-        None => CombinatorResult::err(context, e.message, e.by),
-    }
-}

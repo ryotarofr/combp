@@ -328,6 +328,69 @@ fn test_or_n() {
 }
 
 // -----------------------------------------------------------------------
+// chain_tuple テスト（型安全なタプル版）
+// -----------------------------------------------------------------------
+
+#[test]
+fn test_chain3() {
+    let c = chain3(same("a"), same("b"), same("c"));
+    let r = parse(&c, "abcdef");
+    assert!(r.is_ok());
+    let (a, b, c) = r.result.unwrap();
+    assert_eq!(a, "a");
+    assert_eq!(b, "b");
+    assert_eq!(c, "c");
+    assert_eq!(r.context.pos, 3);
+}
+
+#[test]
+fn test_chain3_fail_mid() {
+    let c = chain3(same("a"), same("x"), same("c"));
+    let r = parse(&c, "abcdef");
+    assert!(!r.is_ok());
+}
+
+#[test]
+fn test_chain4() {
+    let c = chain4(same("a"), same("b"), same("c"), same("d"));
+    let r = parse(&c, "abcdef");
+    assert!(r.is_ok());
+    let (a, b, c, d) = r.result.unwrap();
+    assert_eq!(
+        (a.as_str(), b.as_str(), c.as_str(), d.as_str()),
+        ("a", "b", "c", "d")
+    );
+}
+
+#[test]
+fn test_chain5() {
+    let c = chain5(same("a"), same("b"), same("c"), same("d"), same("e"));
+    let r = parse(&c, "abcdef");
+    assert!(r.is_ok());
+    let (a, b, c, d, e) = r.result.unwrap();
+    assert_eq!(
+        (a.as_str(), b.as_str(), c.as_str(), d.as_str(), e.as_str()),
+        ("a", "b", "c", "d", "e")
+    );
+}
+
+#[test]
+fn test_chain3_mixed_types() {
+    // 異なる型を混合して型安全性を確認
+    let c = chain3(
+        same("("),
+        map(digit(), |s| s.parse::<i32>().unwrap()),
+        same(")"),
+    );
+    let r = parse(&c, "(7)rest");
+    assert!(r.is_ok());
+    let (open, num, close) = r.result.unwrap();
+    assert_eq!(open, "(");
+    assert_eq!(num, 7); // i32 として取得できる（downcast 不要）
+    assert_eq!(close, ")");
+}
+
+// -----------------------------------------------------------------------
 // 統合テスト: シンプルな行パーサー（README の例に相当）
 // -----------------------------------------------------------------------
 

@@ -1,7 +1,5 @@
 """
 combinator モジュールの包括的テスト。
-
-TypeScript / Go / Rust 版と同等のテストケースを網羅する。
 """
 
 from __future__ import annotations
