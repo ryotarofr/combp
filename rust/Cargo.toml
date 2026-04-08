@@ -1,0 +1,9 @@
+[package]
+name = "combp"
+version = "2.0.0"
+edition = "2021"
+description = "A generic parser combinator library"
+license = "MIT"
+repository = "https://github.com/ryotarofr/combp"
+keywords = ["parser", "combinator", "parsing"]
+categories = ["parsing"]

@@ -1,0 +1,33 @@
+name: Publish Go Module
+
+on:
+  push:
+    tags:
+      - "go/v*"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: go
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+      - name: Run tests
+        run: go test -v -race ./...
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Request GOPROXY indexing
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          VERSION=${TAG#go/}
+          curl "https://proxy.golang.org/github.com/ryotarofr/combp/go/@v/${VERSION}.info" || true
+          echo "Tagged ${VERSION} — Go module will be available via:"
+          echo "  go get github.com/ryotarofr/combp/go@${VERSION}"

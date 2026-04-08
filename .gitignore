@@ -1,0 +1,35 @@
+# ====================
+# Python
+# ====================
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+dist/
+build/
+*.whl
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ====================
+# Go
+# ====================
+go/vendor/
+
+# ====================
+# Rust
+# ====================
+rust/target/
+rust/Cargo.lock
+
+# ====================
+# IDE / Editor
+# ====================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db

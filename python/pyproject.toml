@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "combp"
+version = "2.0.0"
+description = "A generic parser combinator library for Python"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+authors = [
+    { name = "ryotarofr" },
+]
+keywords = ["parser", "combinator", "parsing"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Text Processing",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/ryotarofr/combp"
+Repository = "https://github.com/ryotarofr/combp"
+Issues = "https://github.com/ryotarofr/combp/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["combp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
