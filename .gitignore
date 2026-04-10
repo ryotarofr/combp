@@ -24,6 +24,14 @@ rust/target/
 rust/Cargo.lock
 
 # ====================
+# C#
+# ====================
+cs/**/bin/
+cs/**/obj/
+cs/**/*.nupkg
+cs/.vs/
+
+# ====================
 # IDE / Editor
 # ====================
 .vscode/
