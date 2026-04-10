@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "combp"
 version = "2.0.0"
 description = "A generic parser combinator library for Python"
-readme = "README.md"
+readme = "../README.md"
 license = "MIT"
 requires-python = ">=3.12"
 authors = [
