@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>14</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Combp</RootNamespace>
+
+    <!-- NuGet パッケージ情報 -->
+    <PackageId>Combp</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>ryotarofr</Authors>
+    <Description>汎用パーサーコンビネータライブラリ。小さなコンビネータを合成して複雑なパーサーを宣言的に構築できる。</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>parser;combinator;parsing</PackageTags>
+    <RepositoryUrl>https://github.com/ryotarofr/combp</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>
