@@ -5,6 +5,13 @@ on:
     tags:
       - "rust/v*"
 
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-rust-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -14,12 +21,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - name: Run tests
-        run: cargo test --verbose
-      - name: Check formatting
-        run: cargo fmt -- --check
-      - name: Run clippy
-        run: cargo clippy -- -D warnings
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust
+      - name: Verify tag matches Cargo.toml version
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#rust/v}"
+          CARGO_VERSION=$(cargo metadata --no-deps --format-version 1 \
+            | jq -r '.packages[0].version')
+          echo "tag=$TAG_VERSION cargo=$CARGO_VERSION"
+          [ "$TAG_VERSION" = "$CARGO_VERSION" ]
+      - run: cargo fmt --all -- --check
+      - run: cargo clippy --all-targets --all-features --locked -- -D warnings
+      - run: cargo test --locked --verbose
+      - run: cargo publish --locked --dry-run
 
   publish:
     needs: test
@@ -30,7 +47,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust
       - name: Publish to crates.io
-        run: cargo publish
+        run: cargo publish --locked
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
